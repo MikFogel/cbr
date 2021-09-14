@@ -48,6 +48,27 @@ class Summer:
 
 
 
+
+
+    def capitalize_name(self):
+        r = list()
+
+        self.name = self.name.strip()
+        for n in self.name.split(" "):
+            nn = n[0].upper() + n[1:]
+            r.append(nn)
+
+        self.name = " ".join(r)
+        self.save()
+
+
+        try:
+            this_visitor.capitalize_name()
+        except Exception as e:
+            send_notification('md@erfogel.ru', 'capitalize error', str(e))
+
+
+
 if __name__ == "__main__":
 
     total_product_sum = float(input("Введите общую сумму >> "))
