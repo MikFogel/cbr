@@ -4,7 +4,7 @@ import json
 import xmltodict
 
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtGui import QPixmap,  QIntValidator
+from PyQt5.QtGui import QPixmap,  QIntValidator, QDoubleValidator
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QDialog
 from PyQt5.QtCore import QDate, QThread, pyqtSignal
 from requests.models import Response
@@ -22,10 +22,10 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.setupUi(self)
 
         self.setWindowTitle("Центробанк РФ")
-        self.rub_result.setValidator( QIntValidator())
-        self.euro_result.setValidator( QIntValidator())
-        self.usd_result.setValidator( QIntValidator())
-        self.zlt_result.setValidator( QIntValidator())
+        self.rub_result.setValidator( QDoubleValidator())
+        self.euro_result.setValidator( QDoubleValidator())
+        self.usd_result.setValidator( QDoubleValidator())
+        self.zlt_result.setValidator( QDoubleValidator())
         self.rub_result.setText('0')
         self.euro_result.setText('0')
         self.usd_result.setText('0')
@@ -42,6 +42,69 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.calendarWidget.setMaximumDate(QDate(max_date.year, max_date.month, max_date.day))
         self.show()
         self.disable_converter_input(True)
+
+        self.rub_result.textEdited.connect(self.input_rub)
+        self.euro_result.textEdited.connect(self.input_eur)
+        self.usd_result.textEdited.connect(self.input_usd)
+        self.zlt_result.textEdited.connect(self.input_zlt)
+
+    def input_rub(self, sender):
+
+        s = sender.replace(",", '.')
+
+        try:
+            float_sender = float(s)
+            self.euro_result.setText(str(round(float_sender / self.euro, 2)))
+            self.usd_result.setText(str(round(float_sender / self.usd, 2)))
+            self.zlt_result.setText(str(round(float_sender / self.zlt, 2)))
+        except ValueError:
+            self.euro_result.setText("0")
+            self.usd_result.setText("0")
+            self.zlt_result.setText("0")
+
+        
+    
+    def input_eur(self, sender):
+        s = sender.replace(",", '.')
+
+        try:
+            float_sender = float(s)
+            float_rub = float_sender * self.euro
+            self.rub_result.setText(str(round(float_rub, 2)))
+            self.usd_result.setText(str(round(float_rub / self.usd, 2)))
+            self.zlt_result.setText(str(round(float_rub / self.zlt, 2)))
+        except ValueError:
+            self.rub_result.setText("0")
+            self.usd_result.setText("0")
+            self.zlt_result.setText("0") 
+
+    def input_usd(self, sender):
+        s = sender.replace(",", '.')
+
+        try:
+            float_sender = float(s)
+            float_rub = float_sender * self.usd
+            self.rub_result.setText(str(round(float_rub, 2)))
+            self.euro_result.setText(str(round(float_rub / self.euro, 2)))
+            self.zlt_result.setText(str(round(float_rub / self.zlt, 2)))
+        except ValueError:
+            self.rub_result.setText("0")
+            self.euro_result.setText("0")
+            self.zlt_result.setText("0") 
+
+    def input_zlt(self, sender):
+        s = sender.replace(",", '.')
+
+        try:
+            float_sender = float(s)
+            float_rub = float_sender * self.zlt
+            self.rub_result.setText(str(round(float_rub, 2)))
+            self.euro_result.setText(str(round(float_rub / self.euro, 2)))
+            self.usd_result.setText(str(round(float_rub / self.usd, 2)))
+        except ValueError:
+            self.rub_result.setText("0")
+            self.euro_result.setText("0")
+            self.usd_result.setText("0")  
         
     def disable_converter_input(self, disable):
         self.rub_result.setReadOnly(disable)
