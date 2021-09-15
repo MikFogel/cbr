@@ -25,13 +25,16 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.rub_result.setValidator( QIntValidator())
         self.euro_result.setValidator( QIntValidator())
         self.usd_result.setValidator( QIntValidator())
+        self.zlt_result.setValidator( QIntValidator())
         self.rub_result.setText('0')
         self.euro_result.setText('0')
         self.usd_result.setText('0')
+        self.zlt_result.setText('0')
         
         
         self.euro: float = None 
         self.usd:float = None 
+        self.zlt:float = None 
         max_date = datetime.date.today()
 
         self.statusbar.showMessage("Валюты не загружены")
@@ -44,12 +47,13 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.rub_result.setReadOnly(disable)
         self.euro_result.setReadOnly(disable)
         self.usd_result.setReadOnly(disable)
+        self.zlt_result.setReadOnly(disable)
 
 
     def is_loaded(self):
         return self.euro is not None and self.usd is not None 
 
-    def set_currency(self, euro: float=None, usd: float =None):
+    def set_currency(self, euro: float=None, usd: float =None, zlt:float=None):
         if euro:
             print(euro)
             self.euro = euro 
@@ -58,6 +62,10 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             print(usd)
             self.usd = usd
             self.lcd_usd.display(self.usd)
+        if zlt:
+            print(zlt)
+            self.zlt = zlt
+            self.lcd_zlt.display(self.zlt)
 
     def request_cbr(self):
         self.request_btn.hide()
@@ -72,6 +80,9 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
 
             if cur['NumCode'] == "978":
                 self.set_currency(euro=float(cur['Value'].replace(",", '.')))
+
+            if cur['NumCode'] == "985":
+                self.set_currency(zlt=float(cur['Value'].replace(",", '.')))
             
             if cur['NumCode'] == "840":
                 self.set_currency(usd=float(cur['Value'].replace(",", '.')))

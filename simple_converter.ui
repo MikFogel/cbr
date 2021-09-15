@@ -64,7 +64,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QLabel" name="euro_lbl">
+        <widget class="QLabel" name="euro_lcd_lbl">
          <property name="font">
           <font>
            <pointsize>50</pointsize>
@@ -90,7 +90,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLabel" name="euro_lbl_2">
+        <widget class="QLabel" name="usd_lcd_lbl">
          <property name="font">
           <font>
            <pointsize>50</pointsize>
@@ -106,6 +106,32 @@
        </item>
        <item>
         <widget class="QLCDNumber" name="lcd_usd">
+         <property name="digitCount">
+          <number>7</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="zlt_lcd_lbl">
+         <property name="font">
+          <font>
+           <pointsize>50</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Zlt</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLCDNumber" name="lcd_zlt">
          <property name="digitCount">
           <number>7</number>
          </property>
@@ -287,6 +313,53 @@
        </item>
        <item>
         <widget class="QLineEdit" name="usd_result">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <property name="spacing">
+        <number>15</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="zlt_lbl">
+         <property name="font">
+          <font>
+           <pointsize>30</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ZLT</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="zlt_result">
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
