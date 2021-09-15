@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(173, 127, 168);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="request_btn">
     <property name="geometry">
@@ -22,6 +25,9 @@
       <width>411</width>
       <height>81</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(92, 53, 102);</string>
     </property>
     <property name="text">
      <string>Запросить ЦБ</string>
@@ -52,16 +58,16 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="leftMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QLabel" name="euro_lcd_lbl">
@@ -69,6 +75,10 @@
           <font>
            <pointsize>50</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
          </property>
          <property name="text">
           <string>EURO</string>
@@ -80,6 +90,9 @@
        </item>
        <item>
         <widget class="QLCDNumber" name="lcd_euro">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(211, 215, 207);</string>
+         </property>
          <property name="digitCount">
           <number>7</number>
          </property>
@@ -96,6 +109,10 @@
            <pointsize>50</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
          <property name="text">
           <string>USD</string>
          </property>
@@ -106,6 +123,9 @@
        </item>
        <item>
         <widget class="QLCDNumber" name="lcd_usd">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(211, 215, 207);</string>
+         </property>
          <property name="digitCount">
           <number>7</number>
          </property>
@@ -122,6 +142,10 @@
            <pointsize>50</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
          <property name="text">
           <string>Zlt</string>
          </property>
@@ -132,6 +156,9 @@
        </item>
        <item>
         <widget class="QLCDNumber" name="lcd_zlt">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(211, 215, 207);</string>
+         </property>
          <property name="digitCount">
           <number>7</number>
          </property>
@@ -219,11 +246,25 @@
        </item>
        <item>
         <widget class="QLineEdit" name="rub_result">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
          <property name="cursorPosition">
           <number>0</number>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cp_rub">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>c</string>
          </property>
         </widget>
        </item>
@@ -238,7 +279,7 @@
         <enum>QLayout::SetMinimumSize</enum>
        </property>
        <property name="leftMargin">
-        <number>5</number>
+        <number>10</number>
        </property>
        <property name="topMargin">
         <number>5</number>
@@ -266,11 +307,25 @@
        </item>
        <item>
         <widget class="QLineEdit" name="euro_result">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cp_euro">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>c</string>
          </property>
         </widget>
        </item>
@@ -313,11 +368,25 @@
        </item>
        <item>
         <widget class="QLineEdit" name="usd_result">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cp_usd">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>c</string>
          </property>
         </widget>
        </item>
@@ -332,7 +401,7 @@
         <enum>QLayout::SetMinimumSize</enum>
        </property>
        <property name="leftMargin">
-        <number>5</number>
+        <number>18</number>
        </property>
        <property name="topMargin">
         <number>5</number>
@@ -360,11 +429,25 @@
        </item>
        <item>
         <widget class="QLineEdit" name="zlt_result">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cp_zlt">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>c</string>
          </property>
         </widget>
        </item>

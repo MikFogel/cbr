@@ -48,6 +48,32 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.usd_result.textEdited.connect(self.input_usd)
         self.zlt_result.textEdited.connect(self.input_zlt)
 
+        self.cp_rub.clicked.connect(self.buffer_rub)
+        self.cp_euro.clicked.connect(self.buffer_euro)
+        self.cp_usd.clicked.connect(self.buffer_usd)
+        self.cp_zlt.clicked.connect(self.buffer_zlt)
+
+    def buffer_rub(self):
+        if self.is_loaded():
+            QApplication.clipboard().setText(self.rub_result.text())
+            self.statusbar.showMessage(f" Поле РУБЛИ скопировано в буфер обмена")
+    
+    def buffer_euro(self):
+        if self.is_loaded():
+            QApplication.clipboard().setText(self.euro_result.text())
+            self.statusbar.showMessage(f" Поле ЕВРО скопировано в буфер обмена")
+
+    def buffer_usd(self):
+        if self.is_loaded():
+            QApplication.clipboard().setText(self.usd_result.text())
+            self.statusbar.showMessage(f" Поле ДОЛЛАР США скопировано в буфер обмена")
+
+    def buffer_zlt(self):
+        if self.is_loaded():
+            QApplication.clipboard().setText(self.zlt_result.text())
+            self.statusbar.showMessage(f" Поле ПОЛЬСКИЙ ЗЛОТЫЙ скопировано в буфер обмена")
+
+
     def input_rub(self, sender):
 
         s = sender.replace(",", '.')
@@ -118,24 +144,19 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
 
     def set_currency(self, euro: float=None, usd: float =None, zlt:float=None):
         if euro:
-            print(euro)
             self.euro = euro 
             self.lcd_euro.display(self.euro)
         if usd:
-            print(usd)
             self.usd = usd
             self.lcd_usd.display(self.usd)
         if zlt:
-            print(zlt)
             self.zlt = zlt
             self.lcd_zlt.display(self.zlt)
 
     def request_cbr(self):
         self.request_btn.hide()
-        print ("Запрашиваем ЦБ РФ...")
         self.statusbar.showMessage("Запрашиваем ЦБ РФ...")
         dt = self.calendarWidget.selectedDate().toPyDate().strftime('%d/%m/%Y')
-        print (dt)
         api_data = api_request(f"http://www.cbr.ru/scripts/XML_daily.asp?date_req={dt}")
         result = json.loads(json.dumps(xmltodict.parse(api_data)))
 
