@@ -10,6 +10,9 @@ class Rate:
         self.rate = rate 
         self.per = per 
 
+    def __str__(self):
+        return f"rate {self.rate} per{self.per}" 
+
 
 class Summer:
 
@@ -17,7 +20,11 @@ class Summer:
         self.total_sum = total_sum
         self.rate_list = rate_list
 
-        self.total_tn_rub = float()
+        self.total_tn_rub = 0.0
+
+        print ("TOTAL SUM RUB", self.total_sum)
+        for r in rate_list:
+            print (r)
 
     @classmethod
     def stop_rate_list(cls, rate_list: list):
@@ -34,17 +41,24 @@ class Summer:
 
 
     def calculate(self):
+        print("+"*20)
         for r in self.rate_list:
-            self.total_tn_rub += (self.total_sum * r.per / 100) * r.rate 
+            per_sum: float = round(self.total_sum * r.per / 100, 2)
+            print (f"СУММА В ПРОЦЕНТАХ {per_sum}")
+
+            per_sum_rate = round(per_sum * r.rate, 2)
+
+            print (f"СУММА В ПРОЦЕНТАХ * КУРС {r.rate}: ", per_sum_rate)
+            self.total_tn_rub += per_sum_rate
 
 
         r_total_no_vat = round(self.total_tn_rub, 2)
         r_vat = round(r_total_no_vat * 0.2, 2)
         r_total = round(r_total_no_vat + r_vat, 2)
 
-        print(f"Total without VAT: \t {r_total_no_vat}")
-        print(f"Total VAT: \t {r_vat}")
-        print(f"Total without VAT: \t {r_total}")
+        print(f"Общая без НДС: \t {r_total_no_vat}")
+        print(f"НДС: \t {r_vat}")
+        print(f"Общая с НДС: \t {r_total}")
 
 
 
@@ -109,6 +123,8 @@ if __name__ == "__main__":
                         per = 50.0
 
                     rate = float(cur['Value'].replace(",", '.'))
+
+                    print ("RATE", rate)
 
                     rate_list.append(Rate(rate, per))
 
