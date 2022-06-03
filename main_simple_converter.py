@@ -26,15 +26,19 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.euro_result.setValidator( QDoubleValidator())
         self.usd_result.setValidator( QDoubleValidator())
         self.zlt_result.setValidator( QDoubleValidator())
+        self.kzt_result.setValidator( QDoubleValidator())
+
         self.rub_result.setText('0')
         self.euro_result.setText('0')
         self.usd_result.setText('0')
         self.zlt_result.setText('0')
-        
-        
+        self.kzt_result.setText('0')
+
         self.euro: float = None 
         self.usd:float = None 
-        self.zlt:float = None 
+        self.zlt:float = None
+        self.kzt:float = None
+
         max_date = datetime.date.today()
 
         self.statusbar.showMessage("Валюты не загружены")
@@ -47,11 +51,13 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         self.euro_result.textEdited.connect(self.input_eur)
         self.usd_result.textEdited.connect(self.input_usd)
         self.zlt_result.textEdited.connect(self.input_zlt)
+        self.kzt_result.textEdited.connect(self.input_kzt)
 
         self.cp_rub.clicked.connect(self.buffer_rub)
         self.cp_euro.clicked.connect(self.buffer_euro)
         self.cp_usd.clicked.connect(self.buffer_usd)
         self.cp_zlt.clicked.connect(self.buffer_zlt)
+        self.cp_kzt.clicked.connect(self.buffer_kzt)
 
     def buffer_rub(self):
         if self.is_loaded():
@@ -73,6 +79,10 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             QApplication.clipboard().setText(self.zlt_result.text())
             self.statusbar.showMessage(f" Поле ПОЛЬСКИЙ ЗЛОТЫЙ скопировано в буфер обмена")
 
+    def buffer_kzt(self):
+        if self.is_loaded():
+            QApplication.clipboard().setText(self.zlt_result.text())
+            self.statusbar.showMessage(f" Поле ТЕНГЕ КЗ скопировано в буфер обмена")
 
     def input_rub(self, sender):
 
@@ -83,13 +93,14 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             self.euro_result.setText(str(round(float_sender / self.euro, 2)))
             self.usd_result.setText(str(round(float_sender / self.usd, 2)))
             self.zlt_result.setText(str(round(float_sender / self.zlt, 2)))
+            self.kzt_result.setText(str(round(float_sender / self.kzt, 2)))
+
         except ValueError:
             self.euro_result.setText("0")
             self.usd_result.setText("0")
             self.zlt_result.setText("0")
+            self.kzt_result.setText("0")
 
-        
-    
     def input_eur(self, sender):
         s = sender.replace(",", '.')
 
@@ -99,10 +110,13 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             self.rub_result.setText(str(round(float_rub, 2)))
             self.usd_result.setText(str(round(float_rub / self.usd, 2)))
             self.zlt_result.setText(str(round(float_rub / self.zlt, 2)))
+            self.kzt_result.setText(str(round(float_sender / self.kzt, 2)))
+
         except ValueError:
             self.rub_result.setText("0")
             self.usd_result.setText("0")
-            self.zlt_result.setText("0") 
+            self.zlt_result.setText("0")
+            self.kzt_result.setText("0")
 
     def input_usd(self, sender):
         s = sender.replace(",", '.')
@@ -113,10 +127,12 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             self.rub_result.setText(str(round(float_rub, 2)))
             self.euro_result.setText(str(round(float_rub / self.euro, 2)))
             self.zlt_result.setText(str(round(float_rub / self.zlt, 2)))
+            self.kzt_result.setText(str(round(float_sender / self.kzt, 2)))
         except ValueError:
             self.rub_result.setText("0")
             self.euro_result.setText("0")
-            self.zlt_result.setText("0") 
+            self.zlt_result.setText("0")
+            self.kzt_result.setText("0")
 
     def input_zlt(self, sender):
         s = sender.replace(",", '.')
@@ -127,22 +143,40 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             self.rub_result.setText(str(round(float_rub, 2)))
             self.euro_result.setText(str(round(float_rub / self.euro, 2)))
             self.usd_result.setText(str(round(float_rub / self.usd, 2)))
+            self.kzt_result.setText(str(round(float_sender / self.kzt, 2)))
         except ValueError:
             self.rub_result.setText("0")
             self.euro_result.setText("0")
-            self.usd_result.setText("0")  
+            self.usd_result.setText("0")
+            self.kzt_result.setText("0")
+
+    def input_kzt(self, sender):
+        s = sender.replace(",", '.')
+
+        try:
+            float_sender = float(s)
+            float_rub = float_sender * self.kzt
+            self.rub_result.setText(str(round(float_rub, 2)))
+            self.euro_result.setText(str(round(float_rub / self.euro, 2)))
+            self.usd_result.setText(str(round(float_rub / self.usd, 2)))
+            self.zlt_result.setText(str(round(float_rub / self.zlt, 2)))
+        except ValueError:
+            self.rub_result.setText("0")
+            self.euro_result.setText("0")
+            self.usd_result.setText("0")
+            self.zlt_result.setText("0")
         
     def disable_converter_input(self, disable):
         self.rub_result.setReadOnly(disable)
         self.euro_result.setReadOnly(disable)
         self.usd_result.setReadOnly(disable)
         self.zlt_result.setReadOnly(disable)
-
+        self.kzt_result.setReadOnly(disable)
 
     def is_loaded(self):
         return self.euro is not None and self.usd is not None 
 
-    def set_currency(self, euro: float=None, usd: float =None, zlt:float=None):
+    def set_currency(self, euro: float=None, usd: float =None, zlt:float=None, kzt:float=None):
         if euro:
             self.euro = euro 
             self.lcd_euro.display(self.euro)
@@ -152,6 +186,10 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
         if zlt:
             self.zlt = zlt
             self.lcd_zlt.display(self.zlt)
+
+        if kzt:
+            self.kzt = kzt / 100
+            self.lcd_kzt.display(self.kzt)
 
     def request_cbr(self):
         self.request_btn.hide()
@@ -170,6 +208,9 @@ class MainApp(QMainWindow, simple_converter_layout.Ui_MainWindow):
             
             if cur['NumCode'] == "840":
                 self.set_currency(usd=float(cur['Value'].replace(",", '.')))
+
+            if cur['NumCode'] == '398':
+                self.set_currency(kzt=float(cur['Value'].replace(",", '.')))
 
         if self.is_loaded():
             self.statusbar.showMessage(f" На {dt} данные успешно загружены")
